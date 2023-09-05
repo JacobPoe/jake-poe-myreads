@@ -27,7 +27,8 @@
               "singleQuote": false,
               "bracketSpacing": true,
               "eslintIntegration": true,
-              "printWidth": 80
+              "printWidth": 80,
+              "endOfLine": "auto"
             }
           ]
     }
