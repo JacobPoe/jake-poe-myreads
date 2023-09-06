@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const Shelf = () => {
+const ListBooks = () => {
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -8,6 +8,9 @@ const Shelf = () => {
       </div>
       <div className="list-books-content">
         <div>
+          {/* {shelves.map((shelf) => {
+            return <div></div>;
+          })} */}
           <div className="bookshelf">
             <h2 className="bookshelf-title">Currently Reading</h2>
             <div className="bookshelf-books">
@@ -254,4 +257,4 @@ const Shelf = () => {
   );
 };
 
-export default Shelf;
+export default ListBooks;
