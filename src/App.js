@@ -17,13 +17,13 @@ function App() {
     getBooks();
   }, []);
 
-  console.log(books);
+  // console.log(books);
 
   return (
     <div className="app">
       <Routes>
-        <Route exact path="/" element={<ListBooks />} />
-        <Route exact path="/search" element={<Search />} />
+        <Route exact path="/" element={<ListBooks books={books} />} />
+        <Route exact path="/search" element={<Search books={books} />} />
       </Routes>
     </div>
   );
