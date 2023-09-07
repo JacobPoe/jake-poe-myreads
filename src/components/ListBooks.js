@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import Book from "./Book";
 
-const ListBooks = ({ books }) => {
-  // console.log(books);
+const ListBooks = ({ books, handleUpdateBooks }) => {
+  console.log(books);
 
   return (
     <div className="list-books">
@@ -21,7 +21,13 @@ const ListBooks = ({ books }) => {
             <div className="bookshelf-books">
               <ol className="books-grid">
                 {books.map((book) => {
-                  return <Book key={uuid()} book={book} />;
+                  return (
+                    <Book
+                      key={uuid()}
+                      book={book}
+                      changeShelf={handleUpdateBooks}
+                    />
+                  );
                 })}
               </ol>
             </div>
@@ -208,5 +214,6 @@ const ListBooks = ({ books }) => {
 export default ListBooks;
 
 ListBooks.propTypes = {
-  books: PropTypes.array.isRequired
+  books: PropTypes.array.isRequired,
+  handleUpdateBooks: PropTypes.func.isRequired
 };

@@ -1,33 +1,31 @@
-import { PropTypes } from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuid } from "uuid";
+import * as BooksAPI from "./../BooksAPI";
 import Book from "./Book";
+const Search = () => {
+  const [books, setBooks] = useState([]);
+  const updateBooks = (res) => {
+    setBooks(res);
+  };
 
-const Search = ({ books }) => {
   const [query, setQuery] = useState("");
   const updateQuery = (val) => {
-    val ? setQuery(val.trim()) : setQuery("");
-    console.log(filteredBooks);
+    setQuery(val);
   };
 
-  const filteredBooks =
-    query === ""
-      ? []
-      : books.filter((book) => {
-          return filterBooks(book);
-        });
-  const filterBooks = (book) => {
-    return (
-      book.title.includes(query.toLowerCase()) ||
-      book.authors
-        .filter((author) => {
-          return author.includes(query.toLowerCase());
-        })
-        .includes(query.toLowerCase()) ||
-      book.industryIdentifiers.includes(query.toLowerCase())
-    );
-  };
+  useEffect(() => {
+    const searchBooks = async () => {
+      if (query) {
+        const res = await BooksAPI.search(query, 20);
+        updateBooks(res);
+        console.log(books);
+        console.log(books.error);
+      }
+    };
+
+    searchBooks();
+  }, [query]);
 
   return (
     <div className="search-books">
@@ -43,11 +41,15 @@ const Search = ({ books }) => {
         </div>
       </div>
       <div className="search-books-results">
-        <ol className="books-grid">
-          {filteredBooks.map((book) => {
-            return <Book key={uuid()} book={book} />;
-          })}
-        </ol>
+        {books?.error === ("empty query" || undefined) ? (
+          <p>No results found.</p>
+        ) : (
+          <ol className="books-grid">
+            {books?.map((book) => {
+              return <Book key={uuid()} book={book} />;
+            })}
+          </ol>
+        )}
       </div>
       <Link to={{ pathname: "/" }} className="close-search">
         Return Home
@@ -57,7 +59,3 @@ const Search = ({ books }) => {
 };
 
 export default Search;
-
-Search.propTypes = {
-  books: PropTypes.array.isRequired
-};

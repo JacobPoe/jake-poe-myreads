@@ -4,10 +4,13 @@ import "./App.css";
 import * as BooksAPI from "./BooksAPI";
 import ListBooks from "./components/ListBooks";
 import Search from "./components/Search";
-// import { Book } from "./models/Book";
 
 function App() {
   const [books, setBooks] = useState([]);
+  const updateBooks = (books) => {
+    setBooks(books);
+  };
+
   useEffect(() => {
     const getBooks = async () => {
       const res = await BooksAPI.getAll();
@@ -15,15 +18,23 @@ function App() {
     };
 
     getBooks();
-  }, []);
+  }, [books]);
 
   // console.log(books);
 
   return (
     <div className="app">
       <Routes>
-        <Route exact path="/" element={<ListBooks books={books} />} />
-        <Route exact path="/search" element={<Search books={books} />} />
+        <Route
+          exact
+          path="/"
+          element={<ListBooks books={books} handleUpdateBooks={updateBooks} />}
+        />
+        <Route
+          exact
+          path="/search"
+          element={<Search addBook={updateBooks} />}
+        />
       </Routes>
     </div>
   );
