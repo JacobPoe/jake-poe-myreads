@@ -15,8 +15,9 @@ const Search = () => {
   };
 
   useEffect(() => {
+    let isSearching = true;
     const searchBooks = async () => {
-      if (query) {
+      if (query && isSearching) {
         const res = await BooksAPI.search(query, 20);
         updateBooks(res);
         console.log(books);
@@ -25,6 +26,10 @@ const Search = () => {
     };
 
     searchBooks();
+
+    return () => {
+      isSearching = false;
+    };
   }, [query]);
 
   return (
@@ -32,6 +37,8 @@ const Search = () => {
       <div className="search-books-bar">
         <div className="search-books-input-wrapper">
           <input
+            id="searchbar"
+            key="searchbar"
             type="text"
             placeholder="Search by title, author, or ISBN"
             onChange={(event) => {
