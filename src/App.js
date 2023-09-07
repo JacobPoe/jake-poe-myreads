@@ -18,7 +18,7 @@ function App() {
     };
 
     getBooks();
-  }, [books]);
+  }, []);
 
   // console.log(books);
 
