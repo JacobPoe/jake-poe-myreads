@@ -1,13 +1,22 @@
 import { PropTypes } from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
+import * as BooksAPI from "./../BooksAPI";
 
-const Book = ({ book, changeShelf }) => {
-  const [shelf, setshelf] = useState(book?.shelf);
+const Book = ({ book }) => {
+  const [shelf, setshelf] = useState("");
   const updateShelf = (val) => {
+    console.log(`Placing "${book.title}" on shelf ${val}`);
     setshelf(val);
-    changeShelf();
   };
+
+  useEffect(() => {
+    const changeShelf = async () => {
+      if (shelf !== "") await BooksAPI.update(book, shelf);
+    };
+
+    changeShelf();
+  }, [shelf]);
 
   return (
     <li key={book.id}>
@@ -21,6 +30,7 @@ const Book = ({ book, changeShelf }) => {
           </div>
           <div className="book-shelf-changer">
             <select
+              name={`select_${book.id}`}
               value={shelf}
               onChange={(event) => updateShelf(event.target.value)}
             >
@@ -48,8 +58,5 @@ const Book = ({ book, changeShelf }) => {
 export default Book;
 
 Book.propTypes = {
-  book: PropTypes.object.isRequired,
-  changeShelf: PropTypes.func.isRequired,
-
-  updateShelf: PropTypes.func.isRequired
+  book: PropTypes.object.isRequired
 };
