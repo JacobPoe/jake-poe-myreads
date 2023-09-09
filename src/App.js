@@ -7,20 +7,22 @@ import Search from "./components/Search";
 
 function App() {
   const [books, setBooks] = useState([]);
-  const updateBooks = async () => {
-    console.log("updating books");
+  const updateBooks = (val) => {
+    setBooks(val);
+    console.log("updating books", books);
+  };
+
+  const getAllBooks = async () => {
     const res = await BooksAPI.getAll();
-    console.log(res);
-    return setBooks(res);
+    if (res !== books) {
+      return updateBooks(res);
+    }
   };
 
   useEffect(() => {
-    let isUpdating = true;
-    if (isUpdating === true) updateBooks();
-
-    return () => {
-      isUpdating = false;
-    };
+    // let isUpdating = false;
+    // if (isUpdating === true) updateBooks();
+    getAllBooks();
   }, []);
 
   return (
@@ -30,13 +32,13 @@ function App() {
           exact
           path="/"
           element={
-            <ListBooks books={books} handleUpdateBooks={() => updateBooks} />
+            <ListBooks books={books} handleUpdateBooks={() => getAllBooks()} />
           }
         />
         <Route
           exact
           path="/search"
-          element={<Search addBook={() => updateBooks} />}
+          element={<Search addBook={() => getAllBooks()} />}
         />
       </Routes>
     </div>

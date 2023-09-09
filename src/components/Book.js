@@ -3,11 +3,10 @@ import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import * as BooksAPI from "../BooksAPI";
 
-const Book = ({ book, changeBookshelf }) => {
+const Book = ({ book }) => {
   const [shelf, setshelf] = useState("");
   const updateShelf = (val) => {
     setshelf(val);
-    changeBookshelf;
   };
 
   useEffect(() => {
@@ -56,6 +55,5 @@ const Book = ({ book, changeBookshelf }) => {
 export default Book;
 
 Book.propTypes = {
-  book: PropTypes.object.isRequired,
-  changeBookshelf: PropTypes.func.isRequired
+  book: PropTypes.object.isRequired
 };

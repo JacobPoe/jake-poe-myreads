@@ -11,21 +11,21 @@ const ListBooks = ({ books, handleUpdateBooks }) => {
       <div className="list-books-content">
         <Bookshelf
           shelf={"Currently Reading"}
-          handleUpdateBooks={handleUpdateBooks}
+          handleUpdateBooks={() => handleUpdateBooks()}
           books={books.filter((book) => {
             return book.shelf === "currentlyReading";
           })}
         />
         <Bookshelf
           shelf={"Want to Read"}
-          handleUpdateBooks={handleUpdateBooks}
+          handleUpdateBooks={() => handleUpdateBooks()}
           books={books.filter((book) => {
             return book.shelf === "wantToRead";
           })}
         />
         <Bookshelf
           shelf={"Read"}
-          handleUpdateBooks={handleUpdateBooks}
+          handleUpdateBooks={() => handleUpdateBooks()}
           books={books.filter((book) => {
             return book.shelf === "read";
           })}
