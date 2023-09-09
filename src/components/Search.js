@@ -17,11 +17,9 @@ const Search = () => {
   useEffect(() => {
     let isSearching = true;
     const searchBooks = async () => {
-      if (query && isSearching) {
+      if (isSearching) {
         const res = await BooksAPI.search(query, 20);
         updateBooks(res);
-        console.log(books);
-        console.log(books.error);
       }
     };
 
