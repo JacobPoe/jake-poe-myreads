@@ -3,19 +3,19 @@ import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
 import * as BooksAPI from "../BooksAPI";
 
-const Book = ({ book }) => {
+const Book = ({ book, changeBookshelf }) => {
   const [shelf, setshelf] = useState("");
   const updateShelf = (val) => {
-    console.log(`Placing "${book.title}" on shelf ${val}`);
     setshelf(val);
+    changeBookshelf;
   };
 
   useEffect(() => {
     const changeShelf = async () => {
-      if (shelf !== "") await BooksAPI.update(book, shelf);
+      await BooksAPI.update(book, shelf);
     };
 
-    changeShelf();
+    if (shelf !== "") changeShelf();
   }, [shelf]);
 
   return (
@@ -56,5 +56,6 @@ const Book = ({ book }) => {
 export default Book;
 
 Book.propTypes = {
-  book: PropTypes.object.isRequired
+  book: PropTypes.object.isRequired,
+  changeBookshelf: PropTypes.func.isRequired
 };

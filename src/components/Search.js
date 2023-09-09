@@ -24,7 +24,7 @@ const Search = () => {
       }
     };
 
-    searchBooks();
+    if (query !== "") searchBooks();
 
     return () => {
       isSearching = false;
@@ -47,6 +47,9 @@ const Search = () => {
         </div>
       </div>
       <div className="search-books-results">
+        <Link to={{ pathname: "/" }} className="close-search">
+          Return Home
+        </Link>
         {books?.error === ("empty query" || undefined) ? (
           <p>No results found.</p>
         ) : (
@@ -57,9 +60,6 @@ const Search = () => {
           </ol>
         )}
       </div>
-      <Link to={{ pathname: "/" }} className="close-search">
-        Return Home
-      </Link>
     </div>
   );
 };
