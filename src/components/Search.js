@@ -7,7 +7,7 @@ import Book from "./Book";
 const Search = () => {
   const [books, setBooks] = useState([]);
   const updateBooks = (res) => {
-    setBooks(res);
+    query !== "" ? setBooks(res) : setBooks([]);
   };
 
   const [query, setQuery] = useState("");
@@ -16,19 +16,16 @@ const Search = () => {
   };
 
   useEffect(() => {
-    let isSearching = true;
     const searchBooks = async () => {
-      if (isSearching) {
+      if (query !== "") {
         const res = await BooksAPI.search(query, 20);
         updateBooks(res);
+      } else {
+        updateBooks([]);
       }
     };
 
-    if (query !== "") searchBooks();
-
-    return () => {
-      isSearching = false;
-    };
+    searchBooks();
   }, [query]);
 
   return (
