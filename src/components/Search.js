@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuid } from "uuid";
-import * as BooksAPI from "./../BooksAPI";
+import * as BooksAPI from "../BooksAPI";
 import Book from "./Book";
+
 const Search = () => {
   const [books, setBooks] = useState([]);
   const updateBooks = (res) => {

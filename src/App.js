@@ -20,8 +20,6 @@ function App() {
     getBooks();
   }, []);
 
-  // console.log(books);
-
   return (
     <div className="app">
       <Routes>

@@ -1,7 +1,7 @@
 import { PropTypes } from "prop-types";
 import { useEffect, useState } from "react";
 import { v4 as uuid } from "uuid";
-import * as BooksAPI from "./../BooksAPI";
+import * as BooksAPI from "../BooksAPI";
 
 const Book = ({ book }) => {
   const [shelf, setshelf] = useState("");
@@ -34,9 +34,7 @@ const Book = ({ book }) => {
               value={shelf}
               onChange={(event) => updateShelf(event.target.value)}
             >
-              <option value="none" disabled>
-                Move to...
-              </option>
+              <option>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
               <option value="read">Read</option>
