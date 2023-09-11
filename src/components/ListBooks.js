@@ -13,11 +13,16 @@ const ListBooks = ({ books, changeShelf }) => {
    * 1) If we knew the list of shelf types was currently static but
    *    COULD change in the future, I would probably declare this
    *    `shelfTypes` definition in some sort of config file and
-   *    import those values at the top of the file.
+   *    import those values at the top of this file.
    *
    * 2) If we knew the API could return some dynamic amount of shelf types,
    *    at the top of the file I'd write some function to parse out the
    *    different `shelfTypes` declarations and create an array from those values.
+   *
+   *
+   * If the structure of the `shelf` object didn't change to include a value for the
+   * shelf title, I'd need some parser to create a shelf title from camelCase text,
+   * so I went with a solution similar to option 1 for this assignment.
    */
   const shelfTypes = [
     {
