@@ -21,6 +21,8 @@ const Search = ({ booksList, addToShelf }) => {
       // Avoiding 403s by preventing the app from
       // sending an empty search query on initial load.
       if (query !== "") {
+        // The API only returns 20 results at a time, so I
+        // may as well maximize the number of results I can get
         const res = await BooksAPI.search(query, 20);
         updateBookResults(res);
       } else {
