@@ -57,15 +57,17 @@ const Search = ({ booksList, addToShelf }) => {
           <p>No results found.</p>
         ) : (
           <ol className="books-grid">
-            {bookResults
-              ?.filter((book) => {
-                return !booksList.includes(book.title);
-              })
-              .map((book) => {
-                return (
-                  <Book key={uuid()} book={book} changeShelf={addToShelf} />
-                );
-              })}
+            {bookResults?.map((book) => {
+              const match = booksList.filter((matchingBook) => {
+                return matchingBook.id === book.id;
+              })[0]; // results are returned in an array with one element
+
+              // Update the `book` object with the value of `shelf` from
+              // its corresponding object in the list of books on shelves.
+              book.shelf = match !== undefined ? match.shelf : "none";
+
+              return <Book key={uuid()} book={book} changeShelf={addToShelf} />;
+            })}
           </ol>
         )}
       </div>
