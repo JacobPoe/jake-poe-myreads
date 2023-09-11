@@ -1,10 +1,11 @@
+import { PropTypes } from "prop-types";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import * as BooksAPI from "../BooksAPI";
 import Book from "./Book";
 
-const Search = () => {
+const Search = ({ addToShelf }) => {
   const [books, setBooks] = useState([]);
   const updateBooks = (res) => {
     query !== "" ? setBooks(res) : setBooks([]);
@@ -52,7 +53,9 @@ const Search = () => {
         ) : (
           <ol className="books-grid">
             {books?.map((book) => {
-              return <Book key={uuid()} book={book} />;
+              return (
+                <Book key={uuid()} book={book} onChangeShelf={addToShelf} />
+              );
             })}
           </ol>
         )}
@@ -62,3 +65,7 @@ const Search = () => {
 };
 
 export default Search;
+
+Search.propTypes = {
+  addToShelf: PropTypes.func.isRequired
+};

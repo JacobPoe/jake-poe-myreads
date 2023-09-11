@@ -2,7 +2,7 @@ import { PropTypes } from "prop-types";
 import { Link } from "react-router-dom";
 import Bookshelf from "./Bookshelf";
 
-const ListBooks = ({ books, handleUpdateBooks }) => {
+const ListBooks = ({ books, changeShelf }) => {
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -11,21 +11,21 @@ const ListBooks = ({ books, handleUpdateBooks }) => {
       <div className="list-books-content">
         <Bookshelf
           shelf={"Currently Reading"}
-          handleUpdateBooks={() => handleUpdateBooks()}
+          changeShelf={() => changeShelf()}
           books={books.filter((book) => {
             return book.shelf === "currentlyReading";
           })}
         />
         <Bookshelf
           shelf={"Want to Read"}
-          handleUpdateBooks={() => handleUpdateBooks()}
+          changeShelf={() => changeShelf()}
           books={books.filter((book) => {
             return book.shelf === "wantToRead";
           })}
         />
         <Bookshelf
           shelf={"Read"}
-          handleUpdateBooks={() => handleUpdateBooks()}
+          changeShelf={() => changeShelf()}
           books={books.filter((book) => {
             return book.shelf === "read";
           })}
@@ -42,5 +42,5 @@ export default ListBooks;
 
 ListBooks.propTypes = {
   books: PropTypes.array.isRequired,
-  handleUpdateBooks: PropTypes.func.isRequired
+  changeShelf: PropTypes.func.isRequired
 };

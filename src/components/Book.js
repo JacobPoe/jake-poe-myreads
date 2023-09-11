@@ -1,20 +1,26 @@
 import { PropTypes } from "prop-types";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { v4 as uuid } from "uuid";
 import * as BooksAPI from "../BooksAPI";
 
-const Book = ({ book }) => {
-  const [shelf, setshelf] = useState("");
-  const updateShelf = (val) => {
-    setshelf(val);
+const Book = ({ book, onChangeShelf }) => {
+  // const [shelf, setShelf] = useState("");
+  // const updateShelf = (val) => {
+  //   setShelf(val);
+  // };
+
+  let shelf = "";
+  const changeShelf = async (newShelf) => {
+    console.log(book.title, newShelf);
+    await BooksAPI.update(book, newShelf);
+    onChangeShelf();
+    // updateShelf(newShelf);
   };
 
   useEffect(() => {
-    const changeShelf = async () => {
-      await BooksAPI.update(book, shelf);
-    };
-
-    if (shelf !== "") changeShelf();
+    if (shelf !== "") {
+      changeShelf();
+    }
   }, [shelf]);
 
   return (
@@ -31,7 +37,7 @@ const Book = ({ book }) => {
             <select
               name={`select_${book.id}`}
               value={shelf}
-              onChange={(event) => updateShelf(event.target.value)}
+              onChange={(event) => changeShelf(event.target.value)}
             >
               <option>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
@@ -55,5 +61,6 @@ const Book = ({ book }) => {
 export default Book;
 
 Book.propTypes = {
-  book: PropTypes.object.isRequired
+  book: PropTypes.object.isRequired,
+  onChangeShelf: PropTypes.func.isRequired
 };

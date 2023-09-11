@@ -3,7 +3,7 @@ import Book from "./Book";
 
 import { v4 as uuid } from "uuid";
 
-const Bookshelf = ({ shelf, books, handleUpdateBooks }) => {
+const Bookshelf = ({ shelf, books, changeShelf }) => {
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">{shelf}</h2>
@@ -14,7 +14,7 @@ const Bookshelf = ({ shelf, books, handleUpdateBooks }) => {
               <Book
                 key={uuid()}
                 book={book}
-                changeBookshelf={handleUpdateBooks}
+                onChangeShelf={() => changeShelf()}
               />
             );
           })}
@@ -29,5 +29,5 @@ export default Bookshelf;
 Bookshelf.propTypes = {
   shelf: PropTypes.string.isRequired,
   books: PropTypes.array.isRequired,
-  handleUpdateBooks: PropTypes.func.isRequired
+  changeShelf: PropTypes.func.isRequired
 };
