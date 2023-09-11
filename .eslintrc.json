@@ -4,10 +4,9 @@
         "es2021": true
     },
     "extends": [
-        "standard",
+        "eslint:recommended",
         "plugin:react/recommended",
-        "eslint:recommended", 
-        "prettier"
+        "plugin:prettier/recommended"
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -17,5 +16,20 @@
         "react"
     ],
     "rules": {
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "prettier/prettier": [
+            "error",
+            {
+              "trailingComma": "none",
+              "tabWidth": 2,
+              "semi": true,
+              "singleQuote": false,
+              "bracketSpacing": true,
+              "eslintIntegration": true,
+              "printWidth": 80,
+              "endOfLine": "auto"
+            }
+          ]
     }
 }
