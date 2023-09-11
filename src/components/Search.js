@@ -53,7 +53,7 @@ const Search = ({ booksList, addToShelf }) => {
           Return Home
         </Link>
         {/** Checking for errors/empty results from the search endpoint */}
-        {bookResults?.error === ("empty query" || undefined) ? (
+        {query === "" || bookResults?.error ? (
           <p>No results found.</p>
         ) : (
           <ol className="books-grid">
