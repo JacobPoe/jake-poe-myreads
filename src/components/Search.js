@@ -5,9 +5,9 @@ import { v4 as uuid } from "uuid";
 import * as BooksAPI from "../BooksAPI";
 import Book from "./Book";
 
-const Search = ({ addToShelf }) => {
-  const [books, setBooks] = useState([]);
-  const updateBooks = (res) => {
+const Search = ({ booksList, addToShelf }) => {
+  const [bookResults, setBooks] = useState([]);
+  const updateBookResults = (res) => {
     query !== "" ? setBooks(res) : setBooks([]);
   };
 
@@ -18,11 +18,13 @@ const Search = ({ addToShelf }) => {
 
   useEffect(() => {
     const searchBooks = async () => {
+      // Avoiding 403s by preventing the app from
+      // sending an empty search query on initial load.
       if (query !== "") {
         const res = await BooksAPI.search(query, 20);
-        updateBooks(res);
+        updateBookResults(res);
       } else {
-        updateBooks([]);
+        updateBookResults([]);
       }
     };
 
@@ -48,15 +50,20 @@ const Search = ({ addToShelf }) => {
         <Link to={{ pathname: "/" }} className="close-search">
           Return Home
         </Link>
-        {books?.error === ("empty query" || undefined) ? (
+        {/** Checking for errors/empty results from the search endpoint */}
+        {bookResults?.error === ("empty query" || undefined) ? (
           <p>No results found.</p>
         ) : (
           <ol className="books-grid">
-            {books?.map((book) => {
-              return (
-                <Book key={uuid()} book={book} onChangeShelf={addToShelf} />
-              );
-            })}
+            {bookResults
+              ?.filter((book) => {
+                return !booksList.includes(book.title);
+              })
+              .map((book) => {
+                return (
+                  <Book key={uuid()} book={book} changeShelf={addToShelf} />
+                );
+              })}
           </ol>
         )}
       </div>
@@ -67,5 +74,6 @@ const Search = ({ addToShelf }) => {
 export default Search;
 
 Search.propTypes = {
+  booksList: PropTypes.array.isRequired,
   addToShelf: PropTypes.func.isRequired
 };

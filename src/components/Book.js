@@ -3,22 +3,26 @@ import { useEffect } from "react";
 import { v4 as uuid } from "uuid";
 import * as BooksAPI from "../BooksAPI";
 
-const Book = ({ book, onChangeShelf }) => {
-  // const [shelf, setShelf] = useState("");
-  // const updateShelf = (val) => {
-  //   setShelf(val);
-  // };
-
-  let shelf = "";
-  const changeShelf = async (newShelf) => {
-    console.log(book.title, newShelf);
+const Book = ({ book, changeShelf }) => {
+  /**
+   * Using a regular variable instead of a state variable.
+   *
+   * Since we are using the `changeShelf()` callback, there is
+   * no point in re-rendering state based on the value of `shelf`.
+   *
+   * State will rerender regardless because the callback updates
+   * the state of `books` in App.js
+   */
+  let shelf;
+  const onChangeShelf = async (newShelf) => {
     await BooksAPI.update(book, newShelf);
-    onChangeShelf();
-    // updateShelf(newShelf);
+    changeShelf();
   };
 
   useEffect(() => {
-    if (shelf !== "") {
+    // Don't bother calling changeShelf() if `shelf`'s
+    // new value is empty or somehow undefined
+    if (shelf) {
       changeShelf();
     }
   }, [shelf]);
@@ -37,7 +41,7 @@ const Book = ({ book, onChangeShelf }) => {
             <select
               name={`select_${book.id}`}
               value={shelf}
-              onChange={(event) => changeShelf(event.target.value)}
+              onChange={(event) => onChangeShelf(event.target.value)}
             >
               <option>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
@@ -62,5 +66,5 @@ export default Book;
 
 Book.propTypes = {
   book: PropTypes.object.isRequired,
-  onChangeShelf: PropTypes.func.isRequired
+  changeShelf: PropTypes.func.isRequired
 };

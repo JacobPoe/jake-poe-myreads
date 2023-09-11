@@ -3,10 +3,10 @@ import Book from "./Book";
 
 import { v4 as uuid } from "uuid";
 
-const Bookshelf = ({ shelf, books, changeShelf }) => {
+const Bookshelf = ({ shelfName, books, changeShelf }) => {
   return (
     <div className="bookshelf">
-      <h2 className="bookshelf-title">{shelf}</h2>
+      <h2 className="bookshelf-title">{shelfName}</h2>
       <div className="bookshelf-books">
         <ol className="books-grid">
           {books.map((book) => {
@@ -14,7 +14,7 @@ const Bookshelf = ({ shelf, books, changeShelf }) => {
               <Book
                 key={uuid()}
                 book={book}
-                onChangeShelf={() => changeShelf()}
+                changeShelf={() => changeShelf()}
               />
             );
           })}
@@ -27,7 +27,7 @@ const Bookshelf = ({ shelf, books, changeShelf }) => {
 export default Bookshelf;
 
 Bookshelf.propTypes = {
-  shelf: PropTypes.string.isRequired,
+  shelfName: PropTypes.string.isRequired,
   books: PropTypes.array.isRequired,
   changeShelf: PropTypes.func.isRequired
 };

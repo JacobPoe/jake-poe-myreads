@@ -10,21 +10,21 @@ const ListBooks = ({ books, changeShelf }) => {
       </div>
       <div className="list-books-content">
         <Bookshelf
-          shelf={"Currently Reading"}
+          shelfName={"Currently Reading"}
           changeShelf={() => changeShelf()}
           books={books.filter((book) => {
             return book.shelf === "currentlyReading";
           })}
         />
         <Bookshelf
-          shelf={"Want to Read"}
+          shelfName={"Want to Read"}
           changeShelf={() => changeShelf()}
           books={books.filter((book) => {
             return book.shelf === "wantToRead";
           })}
         />
         <Bookshelf
-          shelf={"Read"}
+          shelfName={"Read"}
           changeShelf={() => changeShelf()}
           books={books.filter((book) => {
             return book.shelf === "read";
