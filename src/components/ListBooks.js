@@ -8,8 +8,16 @@ const ListBooks = ({ books, changeShelf }) => {
    * Creating an array of shelfType objects to iterate through,
    * rather than hard-coding a bunch of <Bookshelf> components.
    *
-   * In a professional setting I'd probably declare this
-   * `shelfTypes` definition in some sort of config file.
+   * In a professional setting I'd handle this list of types in
+   * one of two ways:
+   * 1) If we knew the list of shelf types was currently static but
+   *    COULD change in the future, I would probably declare this
+   *    `shelfTypes` definition in some sort of config file and
+   *    import those values at the top of the file.
+   *
+   * 2) If we knew the API could return some dynamic amount of shelf types,
+   *    at the top of the file I'd write some function to parse out the
+   *    different `shelfTypes` declarations and create an array from those values.
    */
   const shelfTypes = [
     {
